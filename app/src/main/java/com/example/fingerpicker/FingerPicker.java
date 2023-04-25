@@ -6,11 +6,13 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PointF;
 import android.graphics.RectF;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class FingerPicker extends View {
@@ -19,10 +21,10 @@ public class FingerPicker extends View {
     private Random rgen = new Random();
     private boolean isDrawing;
 
-    private int numberOfPointers;
-    private int []x = new int[10];
-    private int []y = new int[10];
-
+    //private int numberOfPointers;
+    //private int []x = new int[10];
+    //private int []y = new int[10];
+    private ArrayList<PointF>listFingerPositions = new ArrayList<>();
 
 
 
@@ -31,15 +33,16 @@ public class FingerPicker extends View {
 
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
-        isDrawing = false;
+        //isDrawing = false;
     }
 
     protected void onDraw(Canvas canvas) {
 
-        if(isDrawing){
+        for(int i=0; i< listFingerPositions.size(); i++){
+            PointF fingerPosition3 = listFingerPositions.get(i);
+            Paint paint = new Paint();
             paint.setColor(Color.RED);
-            canvas.drawCircle(x[numberOfPointers], y[numberOfPointers], 200, paint);
-
+            canvas.drawCircle(fingerPosition3.x,fingerPosition3.y, 200, paint);
         }
         invalidate();
     }
@@ -53,26 +56,24 @@ public class FingerPicker extends View {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_POINTER_DOWN:
-                x[pointerId] = (int) event.getX(pointerIndex);
-                y[pointerId] = (int) event.getY(pointerIndex);
-                numberOfPointers++;
-                isDrawing = true;
-                Log.i(TAG, "ACTION_DOWN");
+                PointF fingerPosition = new PointF(event.getX(pointerIndex), event.getY(pointerIndex));
+                listFingerPositions.add(pointerId, fingerPosition);
                 invalidate();
                 break;
             case MotionEvent.ACTION_MOVE:
-                x[pointerId] = (int) event.getX(pointerIndex);
-                y[pointerId] = (int) event.getY(pointerIndex);
-                Log.i(TAG, "ACTION_MOVE");
+                for(int i=0; i<event.getPointerCount(); i++){
+                    int id = event.getPointerId(i);
+                    PointF fingerPosition2 = listFingerPositions.get(id);
+                    fingerPosition2.x = event.getX(i);
+                    fingerPosition2.y = event.getY(i);
+                }
+                //Log.i(TAG, "ACTION_MOVE");
                 invalidate();
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_POINTER_UP:
-                x[pointerId] = (int) event.getX(pointerIndex);
-                y[pointerId] = (int) event.getY(pointerIndex);
-                numberOfPointers--;
-                isDrawing = false;
-                Log.i(TAG, "ACTION_UP");
+                listFingerPositions.remove(pointerId);
+                //Log.i(TAG, "ACTION_UP");
                 invalidate();
                 break;
         }
