@@ -12,18 +12,12 @@ import android.graphics.PointF;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.HashMap;
 
 public class FingerPicker extends View {
 
-    private final Random rgen = new Random();
     private final Paint paint = new Paint();
-
-    private final ArrayList<PointF>listFingerPositions = new ArrayList<>();
-
-
+    private final HashMap<Integer, PointF>listFingerPositions = new HashMap<>();
 
     public FingerPicker(Context context) {
         super(context);
@@ -32,12 +26,10 @@ public class FingerPicker extends View {
     protected void onDraw(Canvas canvas) {
 
 
-        for(int i=0; i< listFingerPositions.size(); i++){
-            PointF fingerPosition = listFingerPositions.get(i);
+        for(PointF fingerPosition : listFingerPositions.values()){
             paint.setColor(Color.RED);
             canvas.drawCircle(fingerPosition.x,fingerPosition.y, 200f, paint);
         }
-
         invalidate();
     }
 
@@ -54,15 +46,17 @@ public class FingerPicker extends View {
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_POINTER_DOWN:
                 PointF fingerPosition = new PointF(event.getX(pointerIndex), event.getY(pointerIndex));
-                listFingerPositions.add(pointerId, fingerPosition);
+                listFingerPositions.put(pointerId, fingerPosition);
                 invalidate();
                 break;
             case MotionEvent.ACTION_MOVE:
                 for(int i=0; i<event.getPointerCount(); i++){
                     int id = event.getPointerId(i);
                     fingerPosition = listFingerPositions.get(id);
-                    fingerPosition.x = event.getX(i);
-                    fingerPosition.y = event.getY(i);
+                    if(fingerPosition != null){
+                        fingerPosition.x = event.getX(i);
+                        fingerPosition.y = event.getY(i);
+                    }
                 }
                 //Log.i(TAG, "ACTION_MOVE");
                 invalidate();
@@ -70,12 +64,7 @@ public class FingerPicker extends View {
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_POINTER_UP:
                 Log.i(TAG, "ACTION_UP");
-
-                Log.i(TAG, "REMOVE: " + pointerId);
                 listFingerPositions.remove(pointerId);
-
-
-
                 invalidate();
                 break;
         }
