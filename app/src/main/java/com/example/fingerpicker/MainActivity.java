@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(new FingerPicker(this));
 
 
+
     }
 
 

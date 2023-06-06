@@ -8,17 +8,22 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
 //import android.util.Log;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Handler;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
 public class FingerPicker extends View {
     private final Paint paint = new Paint();
+    private final Paint blackPaint = new Paint();
     private final HashMap<Integer, Circle> listFingerCircles = new HashMap<>();
     private final Random random = new Random();
 
@@ -26,8 +31,15 @@ public class FingerPicker extends View {
 
     private boolean winnerSelected = false;
 
+    private ImageView gifImageView;
+
+
     public FingerPicker(Context context) {
         super(context);
+    }
+
+    private void onCreate(){
+        setBackgroundColor(Color.BLACK);
     }
 
     private void selectWinner(){
@@ -37,9 +49,13 @@ public class FingerPicker extends View {
             int randomIndex = random.nextInt(listFingerCircles.size()-1);
             Circle winnerCircle = listFingerCircles.get(randomIndex);
 
+            ArrayList<Integer> keysToKeep = new ArrayList<>();
+            keysToKeep.add(randomIndex);
+            listFingerCircles.keySet().retainAll(keysToKeep);
+
             setBackgroundColor(winnerCircle.getColor());
 
-            Toast.makeText(getContext(), "Gewinner: Kreis " + randomIndex, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getContext(), "Gewinner: Kreis " + randomIndex, Toast.LENGTH_SHORT).show();
             winnerSelected = true;
         }
     }
@@ -47,6 +63,7 @@ public class FingerPicker extends View {
     protected void onDraw(Canvas canvas) {
         for (Circle circle : listFingerCircles.values()) {
             paint.setColor(circle.getColor());
+            canvas.drawCircle(circle.getX(), circle.getY(), 230f, blackPaint);
             canvas.drawCircle(circle.getX(), circle.getY(), 200f, paint);
         }
         invalidate();
@@ -67,12 +84,19 @@ public class FingerPicker extends View {
                 listFingerCircles.put(pointerId, circle);
                 invalidate();
 
+                handler.removeCallbacksAndMessages(null);
+
+                //draw gif
+
+
                 handler.postDelayed(new Runnable(){
                     public void run(){
+                        //remove gif
+
+
                         Log.d("FingerPicker", "run Aufruf");
                         if(winnerSelected == false){
                             Log.d("FingerPicker", "run if erfüllt");
-                            Toast.makeText(getContext(), "Delaying ...", Toast.LENGTH_SHORT).show();
                             selectWinner();
                         }
                     }
@@ -95,8 +119,10 @@ public class FingerPicker extends View {
                 Log.d("FingerPicker", "ACTION_POINTER_UP");
                 listFingerCircles.remove(pointerId);
 
-                if(listFingerCircles.size() > 1){
+                if(listFingerCircles.size() < 1){
+
                     winnerSelected = false;
+                    setBackgroundColor(Color.BLACK);
                     Log.d("FingerPicker", "winnerSelected = false gesetzt");
                 }
 
