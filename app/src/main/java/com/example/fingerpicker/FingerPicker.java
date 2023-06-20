@@ -31,22 +31,16 @@ public class FingerPicker extends View {
 
     private boolean winnerSelected = false;
 
-    private ImageView gifImageView;
-
 
     public FingerPicker(Context context) {
         super(context);
-    }
-
-    private void onCreate(){
-        setBackgroundColor(Color.BLACK);
     }
 
     private void selectWinner(){
         Log.d("FingerPicker", "Select Winner Aufruf");
         if(listFingerCircles.size() >= 2){
             Log.d("FingerPicker", "Select Winner if Aufruf erfüllt");
-            int randomIndex = random.nextInt(listFingerCircles.size()-1);
+            int randomIndex = random.nextInt(listFingerCircles.size());
             Circle winnerCircle = listFingerCircles.get(randomIndex);
 
             ArrayList<Integer> keysToKeep = new ArrayList<>();
@@ -66,6 +60,9 @@ public class FingerPicker extends View {
             canvas.drawCircle(circle.getX(), circle.getY(), 230f, blackPaint);
             canvas.drawCircle(circle.getX(), circle.getY(), 200f, paint);
         }
+
+
+
         invalidate();
     }
 
