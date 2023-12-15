@@ -2,6 +2,9 @@
 
 My first Android App (created as part of a course of my studies together with a fellow student)
 
+This is a really simple FingerPicker app with which you can randomly select a person from a group of people.
+
+
 <img src="https://github.com/Patch4Code/AndroidFingerPickerApp/assets/116561421/e92e6c3c-6013-4a3d-9d8f-a9af7248d26f" height = 450 style="float:left; margin-right:10px; ">
 <img src="https://github.com/Patch4Code/AndroidFingerPickerApp/assets/116561421/3ee15dd3-016e-4a61-917b-ca9ea66e7c2b" height = 450 style="float:left; height = 50">
 
