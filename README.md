@@ -7,8 +7,8 @@
 - For a more refinded FingerPicker/Chooser application, see the corresponding [repository](https://github.com/UrAvgCode/Chooser) of [@UrAvgCod](https://github.com/UrAvgCode)
 
 <br>
-<img src="https://github.com/Patch4Code/AndroidFingerPickerApp/assets/116561421/e92e6c3c-6013-4a3d-9d8f-a9af7248d26f" height = 450 style="float:left; margin-right:10px; ">
-<img src="https://github.com/Patch4Code/AndroidFingerPickerApp/assets/116561421/3ee15dd3-016e-4a61-917b-ca9ea66e7c2b" height = 450 style="float:left; height = 50">
+<img src="https://github.com/Patch4Code/AndroidFingerPickerApp/assets/116561421/e92e6c3c-6013-4a3d-9d8f-a9af7248d26f" width = 64% style="float:left; margin-right:10px; ">
+<img src="https://github.com/Patch4Code/AndroidFingerPickerApp/assets/116561421/3ee15dd3-016e-4a61-917b-ca9ea66e7c2b" width = 30% style="float:left; height = 50">
 
 #### Approach
 - Main logic of the app almost entirely in the FingerPicker view class
