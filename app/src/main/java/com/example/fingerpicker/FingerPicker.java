@@ -57,7 +57,6 @@ public class FingerPicker extends View {
             canvas.drawCircle(circle.getX(), circle.getY(), 200f, paint);
         }
 
-
         invalidate();
     }
 
@@ -78,13 +77,7 @@ public class FingerPicker extends View {
 
                 handler.removeCallbacksAndMessages(null);
 
-                //draw gif
-
-
                 handler.postDelayed(() -> {
-                    //remove gif
-
-
                     Log.d("FingerPicker", "run Aufruf");
                     if (!winnerSelected) {
                         Log.d("FingerPicker", "run if erfüllt");
