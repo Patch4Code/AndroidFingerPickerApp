@@ -40,7 +40,8 @@ public class FingerPicker extends View {
         Log.d("FingerPicker", "Select Winner Aufruf");
         if(listFingerCircles.size() >= 2){
             Log.d("FingerPicker", "Select Winner if Aufruf erfüllt");
-            int randomIndex = random.nextInt(listFingerCircles.size());
+            ArrayList<Integer> indexList = new ArrayList<>(listFingerCircles.keySet());
+            int randomIndex = indexList.get(random.nextInt(indexList.size()));
             Circle winnerCircle = listFingerCircles.get(randomIndex);
 
             ArrayList<Integer> keysToKeep = new ArrayList<>();
