@@ -7,16 +7,11 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
-//import android.util.Log;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Handler;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.Toast;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -36,9 +31,9 @@ public class FingerPicker extends View {
         super(context);
     }
 
-    private void selectWinner(){
+    private void selectWinner() {
         Log.d("FingerPicker", "Select Winner Aufruf");
-        if(listFingerCircles.size() >= 2){
+        if (listFingerCircles.size() >= 2) {
             Log.d("FingerPicker", "Select Winner if Aufruf erfüllt");
             ArrayList<Integer> indexList = new ArrayList<>(listFingerCircles.keySet());
             int randomIndex = indexList.get(random.nextInt(indexList.size()));
@@ -50,7 +45,6 @@ public class FingerPicker extends View {
 
             setBackgroundColor(winnerCircle.getColor());
 
-            //Toast.makeText(getContext(), "Gewinner: Kreis " + randomIndex, Toast.LENGTH_SHORT).show();
             winnerSelected = true;
         }
     }
@@ -61,7 +55,6 @@ public class FingerPicker extends View {
             canvas.drawCircle(circle.getX(), circle.getY(), 230f, blackPaint);
             canvas.drawCircle(circle.getX(), circle.getY(), 200f, paint);
         }
-
 
 
         invalidate();
@@ -87,13 +80,13 @@ public class FingerPicker extends View {
                 //draw gif
 
 
-                handler.postDelayed(new Runnable(){
-                    public void run(){
+                handler.postDelayed(new Runnable() {
+                    public void run() {
                         //remove gif
 
 
                         Log.d("FingerPicker", "run Aufruf");
-                        if(winnerSelected == false){
+                        if (winnerSelected == false) {
                             Log.d("FingerPicker", "run if erfüllt");
                             selectWinner();
                         }
@@ -117,7 +110,7 @@ public class FingerPicker extends View {
                 Log.d("FingerPicker", "ACTION_POINTER_UP");
                 listFingerCircles.remove(pointerId);
 
-                if(listFingerCircles.size() < 1){
+                if (listFingerCircles.size() < 1) {
 
                     winnerSelected = false;
                     setBackgroundColor(Color.BLACK);
