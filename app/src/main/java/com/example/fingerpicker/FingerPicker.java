@@ -86,7 +86,7 @@ public class FingerPicker extends View {
 
 
                         Log.d("FingerPicker", "run Aufruf");
-                        if (winnerSelected == false) {
+                        if (!winnerSelected) {
                             Log.d("FingerPicker", "run if erfüllt");
                             selectWinner();
                         }
