@@ -22,7 +22,7 @@ public class FingerPicker extends View {
     private final HashMap<Integer, Circle> listFingerCircles = new HashMap<>();
     private final Random random = new Random();
 
-    private Handler handler = new Handler();
+    private final Handler handler = new Handler();
 
     private boolean winnerSelected = false;
 
@@ -43,6 +43,7 @@ public class FingerPicker extends View {
             keysToKeep.add(randomIndex);
             listFingerCircles.keySet().retainAll(keysToKeep);
 
+            assert winnerCircle != null;
             setBackgroundColor(winnerCircle.getColor());
 
             winnerSelected = true;
@@ -80,16 +81,14 @@ public class FingerPicker extends View {
                 //draw gif
 
 
-                handler.postDelayed(new Runnable() {
-                    public void run() {
-                        //remove gif
+                handler.postDelayed(() -> {
+                    //remove gif
 
 
-                        Log.d("FingerPicker", "run Aufruf");
-                        if (!winnerSelected) {
-                            Log.d("FingerPicker", "run if erfüllt");
-                            selectWinner();
-                        }
+                    Log.d("FingerPicker", "run Aufruf");
+                    if (!winnerSelected) {
+                        Log.d("FingerPicker", "run if erfüllt");
+                        selectWinner();
                     }
                 }, 3000);
 
@@ -133,7 +132,7 @@ public class FingerPicker extends View {
     private static class Circle {
         private float x;
         private float y;
-        private int color;
+        private final int color;
 
         public Circle(float x, float y, int color) {
             this.x = x;
